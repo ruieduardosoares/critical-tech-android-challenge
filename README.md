@@ -1,1 +1,1 @@
-# critical-tech-android-challenge
+# Top News app

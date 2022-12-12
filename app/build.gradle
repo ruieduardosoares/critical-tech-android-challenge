@@ -1,0 +1,148 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    id "kotlin-kapt"
+    id "dagger.hilt.android.plugin"
+}
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    buildFeatures {
+        viewBinding true
+    }
+
+    defaultConfig {
+        applicationId rootProject.ext.applicationId
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+    }
+
+    buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            debuggable rootProject.ext.debugDebuggable
+            signingConfig signingConfigs.debug
+            resValue "string", "app_name", "TopNews"
+        }
+    }
+
+    flavorDimensionList.add("source")
+    productFlavors {
+        create("bbcnews")
+        create("theverge")
+    }
+
+    compileOptions {
+        coreLibraryDesugaringEnabled rootProject.ext.coreLibraryDesugaringEnabled
+        sourceCompatibility rootProject.ext.javaJvmTarget
+        targetCompatibility rootProject.ext.javaJvmTarget
+    }
+
+    kotlinOptions {
+        jvmTarget = rootProject.ext.kotlinJvmTarget
+    }
+
+    testOptions {
+        execution "ANDROIDX_TEST_ORCHESTRATOR"
+
+        // Disable animations for instrumented tests
+        animationsDisabled = true
+
+        // Encapsulates options for local unit tests.
+        unitTests {
+            unitTests.all {
+                useJUnitPlatform()
+                // All the usual Gradle options.
+                testLogging {
+                    events "passed", "skipped", "failed", "standardOut", "standardError"
+                    showStandardStreams = true
+                }
+                ignoreFailures = true
+            }
+
+            // Include compiled resource into testing environment in case we use
+            // Roboletric tests in case we interact with resources
+            includeAndroidResources = true
+        }
+    }
+
+    sourceSets {
+        main { java.srcDirs = ["src/main/kotlin"] }
+        test.java.srcDirs += "src/test/kotlin"
+        androidTest.java.srcDirs += "src/androidTest/kotlin"
+    }
+}
+
+
+// See https://dagger.dev/hilt/gradle-setup
+kapt {
+    correctErrorTypes true
+}
+
+dependencies {
+    implementation 'androidx.annotation:annotation:1.5.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+
+
+    // Java 8+ Compatibility
+    coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:$rootProject.ext.desugarJdkLibsVersion"
+
+    // Dependency injection
+    implementation "com.google.dagger:hilt-android:$rootProject.ext.hiltVersion"
+    kapt "com.google.dagger:hilt-compiler:$rootProject.ext.hiltVersion"
+
+    // Kotlin support
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$rootProject.ext.kotlinVersion"
+
+    // Kotlin Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutinesAndroidVersion"
+
+    // UI components
+    implementation "androidx.core:core-ktx:$rootProject.ext.androidxCoreKtxVersion"
+    implementation "androidx.activity:activity-ktx:$rootProject.ext.androidxActivityKtxVersion"
+    implementation "androidx.appcompat:appcompat:$rootProject.ext.androidxAppCompatVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$rootProject.ext.androidxConstraintLayoutVersion"
+    implementation "com.google.android.material:material:$rootProject.ext.googleMaterialVersion"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$rootProject.ext.lifecyleJava8CommonsVersion"
+    implementation "androidx.paging:paging-runtime-ktx:$rootProject.ext.pagingVersion"
+
+    // Biometric library Kotlin
+    implementation "androidx.biometric:biometric-ktx:$rootProject.ext.androidXBiometricVersion"
+
+    // Kotlin
+    implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.ext.androidXNavigationVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$rootProject.ext.androidXNavigationVersion"
+
+    // Image Loader
+    implementation "io.coil-kt:coil:$rootProject.ext.coilVersion"
+
+    // Network
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-moshi:$rootProject.ext.retrofitVersion"
+    implementation "com.squareup.moshi:moshi:$rootProject.ext.moshiVersion"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:$rootProject.ext.moshiVersion"
+
+    // Jvm Tests - Using Junit5
+    testImplementation platform("org.junit:junit-bom:$rootProject.ext.junitBomVersion")
+    testImplementation "org.junit.jupiter:junit-jupiter"
+
+    // Mockito
+    testImplementation "org.mockito:mockito-core:$rootProject.ext.mockitoVersion"
+    testImplementation "org.mockito:mockito-inline:$rootProject.ext.mockitoVersion"
+    testImplementation "org.mockito:mockito-junit-jupiter:$rootProject.ext.mockitoVersion"
+    testImplementation "org.mockito.kotlin:mockito-kotlin:$rootProject.ext.mockito2KotlinVersion"
+
+    // Assertion library
+    testImplementation "org.amshove.kluent:kluent-android:$rootProject.ext.kluentVersion"
+
+    // Coroutines test
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.coroutinesAndroidVersion"
+
+    // Http mock server
+    testImplementation "com.squareup.okhttp3:mockwebserver:$rootProject.ext.mockWebServer"
+}

@@ -1,0 +1,2 @@
+rootProject.name = "critical-tech-android-challenge"
+include ":app"

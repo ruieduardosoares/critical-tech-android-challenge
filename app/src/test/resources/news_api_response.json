@@ -1,0 +1,19 @@
+{
+  "status": "ok",
+  "totalResults": 37,
+  "articles": [
+    {
+      "source": {
+        "id": "cnn",
+        "name": "CNN"
+      },
+      "author": "Rob Picheta",
+      "title": "Harry compares Meghan to Diana and criticizes royals' 'unconscious bias' in Netflix documentary - CNN",
+      "description": "Prince Harry and Meghan, Duchess of Sussex, have taken aim at \"unconscious bias\" inside the royal family and defended their decision to quit the institution, as their highly anticipated Netflix documentary series threatens to deepen the split between the coup…",
+      "url": "https://www.cnn.com/2022/12/08/entertainment/harry-meghan-netflix-documentary-release-intl/index.html",
+      "urlToImage": "https://media.cnn.com/api/v1/images/stellar/prod/221205082436-01-netflix-harry-meghan-trailer-screenshot.jpg?c=16x9&q=w_800,c_fill",
+      "publishedAt": "2022-12-08T11:30:00Z",
+      "content": "Prince Harry and Meghan, Duchess of Sussex, have taken aim at unconscious bias inside the royal family and defended their decision to quit the institution, as their highly anticipated Netflix documen… [+7082 chars]"
+    }
+  ]
+}
